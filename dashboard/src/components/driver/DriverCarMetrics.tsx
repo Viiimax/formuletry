@@ -6,6 +6,7 @@ import DriverPedals from "./DriverPedals";
 
 type Props = {
 	carData: CarDataChannels;
+	className?: string; // Added className to Props
 };
 
 function convertKmhToMph(kmhValue: number) {

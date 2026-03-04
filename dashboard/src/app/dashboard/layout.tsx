@@ -32,14 +32,14 @@ export default function DashboardLayout({ children }: Props) {
 	const ended = useDataStore(({ state }) => state?.SessionStatus?.Status === 'Ends');
 
 	return (
-		<div className="flex h-screen w-full bg-[#111827] p-2">
-			<motion.div layout="size" className="flex h-full w-full flex-1 flex-col gap-2">
+		<div className="flex w-full bg-[#111827] p-2 md:min-h-screen">
+			<motion.div layout="size" className="flex w-full flex-1 flex-col gap-2">
 				<DesktopStaticBar show={!syncing || ended} />
 				<MobileStaticBar show={!syncing || ended} />
 
 				<div
 					className={
-						!syncing || ended ? 'no-scrollbar w-full flex-1 overflow-auto rounded-lg' : 'hidden'
+						!syncing || ended ? 'w-full rounded-lg' : 'hidden'
 					}
 				>
 					<MobileDynamicBar />
@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: Props) {
 				<div
 					className={
 						syncing && !ended
-							? 'flex h-full flex-1 flex-col items-center justify-center gap-2 border-zinc-800 rounded-lg border'
+							? 'flex min-h-screen flex-1 flex-col items-center justify-center gap-2 border-zinc-800 rounded-lg border'
 							: 'hidden'
 					}
 				>

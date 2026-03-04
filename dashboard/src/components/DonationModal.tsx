@@ -44,7 +44,7 @@ export default function DonationModal({ isOpen, onClose }: Props) {
 						<div className="space-y-4">
 							{/* Argentina Option */}
 							<a
-								href="https://cafecito.app/formuletry"
+								href="https://tecito.app/formuletry"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="group block w-full rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6 transition-all duration-300 hover:scale-105 hover:border-cyan-400 hover:bg-cyan-500/20"

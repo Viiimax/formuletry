@@ -1,15 +1,14 @@
-"use client";
+export const dynamic = "force-static";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { getNextEvent } from "@/data/f1-calendar";
 import Countdown from "@/components/schedule/Countdown";
 import Flag from "@/components/Flag";
 import SupportFooter from "@/components/SupportFooter";
-import DonationModal from "@/components/DonationModal";
-import { useDonationModal } from "@/hooks/useDonationModal";
 import { utc } from "moment";
 import type { Round } from "@/types/schedule.type";
+import InstallButton from "@/components/InstallButton";
+import DonationButton from "@/components/DonationButton";
 
 const countryCodeMap: Record<string, string> = {
 	Australia: "aus",
@@ -40,106 +39,45 @@ const countryCodeMap: Record<string, string> = {
 };
 
 function NextEventCard() {
-	const [next, setNext] = useState<Round | null>(null);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		const loadNext = () => {
-			const nextEvent = getNextEvent();
-			setNext(nextEvent || null);
-			setLoading(false);
-		};
-		loadNext();
-	}, []);
-
-	if (loading) {
-		return (
-			<div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-				<div className="text-center text-gray-400">
-					Loading next event...
-				</div>
-			</div>
-		);
-	}
-	
-	if (!next) {
-		return (
-			<div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-				<div className="text-center text-gray-400">
-					No upcoming events
-				</div>
-			</div>
-		);
-	}
-
-	const countryCode = countryCodeMap[next.countryName];
-	const nextSession = next.sessions.filter((s) => utc(s.start) > utc())[0];
-
 	return (
-		<div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+		<a href="/dashboard" className="block rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-4">
-					<Flag countryCode={countryCode} className="h-8 w-12 rounded shadow-sm" />
+					<Flag countryCode="aus" className="h-8 w-12 rounded shadow-sm" />
 					<div>
 						<p className="text-xs font-medium uppercase tracking-wider text-blue-400">Next Event</p>
-						<h3 className="text-lg font-bold font-sans text-white">{next.countryName} Grand Prix</h3>
+						<h3 className="text-lg font-bold font-sans text-white">
+							Qatar Airways Australian Grand Prix
+						</h3>
 					</div>
 				</div>
-				{nextSession && (
-					<div className="text-right">
-						<p className="text-xs font-medium uppercase tracking-wider text-gray-400">
-							{nextSession.kind}
-						</p>
-						<div className="font-mono text-sm text-white">
-							{utc(nextSession.start).format("MMM DD, HH:mm")}
-						</div>
-					</div>
-				)}
 			</div>
-		</div>
+		</a>
 	);
 }
 
 export default function Home() {
-	const donationModal = useDonationModal();
 
 	return (
-		<div className="relative min-h-screen bg-deep-slate overflow-hidden">
-			{/* Background Effects */}
-			<div className="absolute inset-0">
-				{/* Ambient Light */}
-				<div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-radial from-blue-900/20 via-blue-900/10 to-transparent blur-3xl" />
-				
-				{/* Grid Pattern */}
-				<div 
-					className="absolute inset-0 opacity-[0.02]"
-					style={{
-						backgroundImage: `
-							linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-							linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-						`,
-						backgroundSize: '50px 50px'
-					}}
-				/>
-			</div>
+		<main className="relative min-h-screen bg-deep-slate overflow-hidden">
 
-			{/* Content */}
-			<div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16">
-				{/* Hero Section */}
+		{/* Content */}
+		<div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16">
+			{/* Hero Section */}
 				<div className="text-center mb-16">
 					{/* Brand */}
 					<div className="mb-8">
 						<h1 className="text-white/90 text-xl font-light tracking-[0.3em] mb-2">
 							FORMULETRY
 						</h1>
-						<div className="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto" />
+						<div className="w-24 h-px bg-linear-to-r from-transparent via-blue-400 to-transparent mx-auto" />
 					</div>
 
 					{/* Main Heading */}
 					<h1 className="text-5xl md:text-7xl font-bold font-sans text-white leading-tight mb-6">
 						Professional F1
 						<br />
-						<span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+						<span className="bg-linear-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
 							Telemetry
 						</span>
 					</h1>
@@ -150,16 +88,37 @@ export default function Home() {
 				</div>
 
 				{/* Launch Button */}
-				<div className="mb-12">
+				<div className="mb-6 md:mb-8">
 					<Link href="/dashboard">
-						<button className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-5 px-10 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
-							<div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-300 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-							<div className="relative flex items-center space-x-3">
-								<span className="tracking-wide">LAUNCH DASHBOARD</span>
-								<span className="text-2xl">🚀</span>
-							</div>
+						<button className="group relative overflow-hidden bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-5 px-10 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+							<div className="absolute inset-0 bg-linear-to-r from-blue-400 to-cyan-300 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+								<div className="relative flex items-center space-x-3">
+									<span className="tracking-wide">LAUNCH DASHBOARD</span>
+								</div>
 						</button>
 					</Link>
+				</div>
+
+				{/* Secondary Actions (Install, Twitter, Coffee) */}
+				<div className="flex flex-row items-center justify-center gap-2 md:gap-3 mb-8 md:mb-16 w-full max-w-xl mx-auto">
+					<a 
+						href="https://twitter.com/formuletry" 
+						target="_blank" 
+						rel="noopener noreferrer"
+						className="group flex-1 flex items-center justify-center gap-2 px-2 py-3 md:px-5 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 backdrop-blur-md text-gray-300 hover:text-white font-medium transition-all duration-300 hover:border-blue-500/30 hover:shadow-[0_4px_20px_rgba(59,130,246,0.15)]"
+					>
+						<svg className="w-4 h-4 md:w-5 md:h-5 text-blue-400 group-hover:scale-110 transition-transform shrink-0" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+						</svg>
+						<span className="text-xs md:text-sm tracking-wide truncate">Follow on X</span>
+					</a>
+
+					<DonationButton />
+				</div>
+
+				{/* Install Button */}
+				<div className="flex flex-row items-center justify-center gap-2 md:gap-3 mb-8 md:mb-16 w-full max-w-xl mx-auto">
+					<InstallButton />
 				</div>
 
 				{/* Next Event Widget */}
@@ -232,16 +191,35 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
+
+				{/* SEO-friendly section */}
+				<div className="mt-16 w-full max-w-7xl mx-auto px-6">
+					<h2 className="text-3xl font-bold text-white mb-6 text-center">What is Formuletry?</h2>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						<div className="bg-gray-800 p-6 rounded-lg shadow-md">
+							<h3 className="text-xl font-semibold text-blue-400 mb-4">Free Live Timing</h3>
+							<p className="text-gray-300">
+								Formuletry is a free platform that provides real-time live timing data for Formula 1 fans. With our tool, you can track every lap, sector, and mini-sector of your favorite drivers. Whether you are at home or on the go, Formuletry ensures you stay updated with the most accurate and detailed timing information available.
+							</p>
+						</div>
+						<div className="bg-gray-800 p-6 rounded-lg shadow-md">
+							<h3 className="text-xl font-semibold text-blue-400 mb-4">Using the Dashboard During Races</h3>
+							<p className="text-gray-300">
+								Access the live dashboard during races to get precise and up-to-date data. Simply open the website, select the ongoing race, and enjoy advanced telemetry features. Our intuitive interface makes it easy for fans of all levels to dive into the world of motorsport analytics.
+							</p>
+						</div>
+						<div className="bg-gray-800 p-6 rounded-lg shadow-md">
+							<h3 className="text-xl font-semibold text-blue-400 mb-4">The Best Free Alternative</h3>
+							<p className="text-gray-300">
+								Diseñado por y para fanáticos del motorsport, Formuletry combina funcionalidad y diseño para ofrecerte la mejor experiencia sin costo alguno. Es la herramienta ideal para quienes buscan datos confiables y detallados.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			{/* Footer */}
 			<SupportFooter />
-
-			{/* Donation Modal */}
-			<DonationModal 
-				isOpen={donationModal.isOpen} 
-				onClose={donationModal.close} 
-			/>
-		</div>
+		</main>
 	);
 }

@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import { Suspense } from "react";
 
 import NextRound from "@/components/schedule/NextRound";
@@ -18,7 +20,7 @@ export default async function SchedulePage() {
 
 			{/* Schedule Section */}
 			<div className="text-center">
-				<h2 className="mb-2 text-4xl font-bold font-sans text-white">2024 Season Calendar</h2>
+				<h2 className="mb-2 text-4xl font-bold font-sans text-white">2026 Season Calendar</h2>
 				<p className="text-gray-400 font-medium">Explore the complete racing schedule</p>
 			</div>
 

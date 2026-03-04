@@ -1,76 +1,55 @@
 import type { Metadata } from "next";
 
-const title = "Formuletry | Professional F1 Telemetry & Live Timing";
+const title = "Formuletry | Professional F1 Telemetry";
 const description =
-	"Professional Formula 1 telemetry platform. Real-time timing data, advanced analysis, live tracking, and comprehensive race insights. Open source F1 dashboard.";
+	"Real-time timing data, advanced analysis, and live tracking for Formula 1.";
 
-const url = "https://formuletry.vercel.app";
+const url = "https://www.formuletry.com";
 
 export const metadata: Metadata = {
 	generator: "Next.js",
-
-	applicationName: title,
-
-	title,
+	applicationName: "Formuletry",
+	title: {
+		default: title,
+		template: "%s | Formuletry",
+	},
 	description,
-
+	openGraph: {
+		type: "website",
+		locale: "en_US",
+		url,
+		siteName: "Formuletry",
+		title,
+		description,
+		images: [
+			{
+				url: "/opengraph.webp",
+				width: 1200,
+				height: 630,
+				alt: "Formuletry Dashboard",
+				type: "image/webp",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title,
+		description,
+		images: ["/opengraph.webp"],
+		creator: "@formuletry",
+	},
 	icons: {
 		icon: [
-			{ url: "/favicon.ico", sizes: "any" },
-			{ url: "/iconformuletry.webp", sizes: "any" },
-			{ url: "/favicon.png", sizes: "32x32", type: "image/png" }
+			{ url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+			{ url: "/icon-512.png", sizes: "512x512", type: "image/png" },
 		],
-		apple: "/iconformuletry.webp",
-		shortcut: "/favicon.ico"
+		apple: [
+			{ url: "/icon-192.png?v=formuletry", sizes: "192x192", type: "image/png" },
+		],
 	},
-
-	openGraph: {
-		title,
-		description,
-		url,
-		type: "website",
-		siteName: "Formuletry - Professional F1 Telemetry",
-	},
-
-	twitter: {
-		site: "@MaximoLXXXI",
-		title,
-		description,
-		creator: "@MaximoLXXXI",
-		card: "summary",
-	},
-
-	category: "Sports & Recreation",
-
-	referrer: "strict-origin-when-cross-origin",
-
-	keywords: ["Formula 1", "F1 telemetry", "professional racing data", "live timing", "race analysis", "motorsport dashboard", "F1 dashboard", "realtime F1"],
-
-	creator: "MaximoLXXXI",
-	publisher: "MaximoLXXXI",
-	authors: [{ name: "MaximoLXXXI", url: "https://x.com/MaximoLXXXI" }],
-
 	appleWebApp: {
 		capable: true,
+		statusBarStyle: "default",
 		title: "Formuletry",
-		statusBarStyle: "black-translucent",
 	},
-
-	formatDetection: {
-		email: false,
-		address: false,
-		telephone: false,
-	},
-
-	metadataBase: new URL(url),
-
-	alternates: {
-		canonical: url,
-	},
-
-	verification: {
-		// Removed Google verification from previous project
-	},
-
-	manifest: "/manifest.json",
 };

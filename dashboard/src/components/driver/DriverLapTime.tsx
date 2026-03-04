@@ -9,22 +9,28 @@ type Props = {
 };
 
 export default function DriverLapTime({ last, best, hasFastest }: Props) {
-		return (
+	return (
 		<div className="place-self-start">
 			<p
-				className={clsx("text-lg leading-none font-medium font-mono tabular-nums", {
-					"text-violet-600!": last.OverallFastest,
-					"text-emerald-500!": last.PersonalFastest,
-					"text-zinc-500!": !last.Value,
-				})}
+				className={clsx(
+					"text-xs leading-tight font-medium font-mono tabular-nums",
+					{
+						"text-violet-600!": last.OverallFastest,
+						"text-emerald-500!": last.PersonalFastest,
+						"text-zinc-500!": !last.Value,
+					}
+				)}
 			>
 				{!!last.Value ? last.Value : "-- -- ---"}
 			</p>
 			<p
-				className={clsx("text-sm leading-none text-zinc-500 font-mono tabular-nums", {
-					"text-violet-600!": hasFastest,
-					"text-zinc-500!": !best.Value,
-				})}
+				className={clsx(
+					"text-[10px] leading-tight text-zinc-500 font-mono tabular-nums",
+					{
+						"text-violet-600!": hasFastest,
+						"text-zinc-500!": !best.Value,
+					}
+				)}
 			>
 				{!!best.Value ? best.Value : "-- -- ---"}
 			</p>

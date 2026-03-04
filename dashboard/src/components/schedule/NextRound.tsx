@@ -65,6 +65,7 @@ export default async function NextRound() {
 	const countryCode = countryCodeMap[next.countryName];
 	const nextSession = next.sessions.filter((s) => utc(s.start) > utc() && s.kind.toLowerCase() !== "race")[0];
 	const nextRace = next.sessions.find((s) => s.kind.toLowerCase() == "race");
+	const isLive = next.sessions.some((s) => utc(s.start) <= utc() && utc(s.end) >= utc());
 
 	return (
 		<div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-card to-deep-slate p-8 shadow-2xl">
@@ -92,13 +93,21 @@ export default async function NextRound() {
 					</div>
 				</div>
 
+				{/* Live Indicator */}
+				{isLive && (
+					<div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+						LIVE
+					</div>
+				)}
+
 				{/* Countdown Section */}
 				{(nextSession || nextRace) && (
 					<div className="grid gap-8 lg:grid-cols-2">
 						{nextSession && (
 							<div className="rounded-xl bg-white/5 p-6">
 								<h3 className="mb-4 text-xl font-semibold font-sans text-white">Next Session</h3>
-								<Countdown next={nextSession} type="other" />
+								<p className="text-lg font-medium text-gray-300">{nextSession.kind}</p>
+								<p className="text-sm font-mono text-gray-400">{utc(nextSession.start).format("MMM DD, HH:mm")}</p>
 							</div>
 						)}
 						{nextRace && (

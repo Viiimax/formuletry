@@ -29,9 +29,19 @@ export default function SupportFooter() {
 					</p>
 
 					<p className="text-xs text-gray-600">
-						This project is unofficial and is not associated in any way with the Formula 1 companies. 
-						F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trademarks of Formula One Licensing B.V.
+					Based on <a href="https://github.com/slowlydev/f1-dash" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">f1-dash</a> by slowlydev · Licensed under <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">GNU AGPL v3</a> · <a href="https://github.com/Viiimax/formuletry" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 font-medium">View Source Code</a>
+				</p>
+
+				<p className="text-xs text-gray-600">
+						This project is unofficial and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trademarks of Formula One Licensing B.V.
 					</p>
+
+				<p className="text-xs text-gray-600">
+  <a href="/privacy" className="text-blue-400 hover:text-blue-300">Privacy Policy</a> ·
+  <a href="/terms" className="text-blue-400 hover:text-blue-300">Terms of Service</a> ·
+  <a href="/about" className="text-blue-400 hover:text-blue-300">About Us</a> ·
+  <a href="/contact" className="text-blue-400 hover:text-blue-300">Contact</a>
+</p>
 				</div>
 			</div>
 		</footer>

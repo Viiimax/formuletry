@@ -1,12 +1,70 @@
-# os
+# OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# creds
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Credentials & Environment
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 compose.env
 
-# compiled
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Compiled
 **/target
 
-# data
+# Data
 *.data.*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Temporary folders
+tmp/
+temp/

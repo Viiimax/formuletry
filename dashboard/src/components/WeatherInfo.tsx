@@ -1,5 +1,8 @@
 import { useDataStore } from "@/stores/useDataStore";
 import { getWindDirection } from "@/lib/getWindDirection";
+import { useState } from "react";
+import { Settings, X, Monitor, Volume2, Eye } from "lucide-react";
+import SettingsModal from "./dashboard/SettingsModal";
 
 // Simple SVG Icons as inline components
 const TrackTempIcon = () => (
@@ -41,8 +44,23 @@ const ClearIcon = () => (
 	</svg>
 );
 
+const ToggleSwitch = ({ active }: { active: boolean }) => (
+	<div
+		className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
+			active ? "bg-blue-600" : "bg-gray-700"
+		}`}
+	>
+		<div
+			className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+				active ? "translate-x-5" : "translate-x-0"
+			}`}
+		/>
+	</div>
+);
+
 export default function DataWeatherInfo() {
 	const weather = useDataStore((state) => state.state?.WeatherData);
+	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
 	if (!weather) {
 		return (
@@ -105,13 +123,23 @@ export default function DataWeatherInfo() {
 			</div>
 			
 			{/* Tercera fila móvil: Estado del clima */}
-			<div className="flex lg:contents">
+			<div className="flex lg:contents justify-between items-center">
 				<div className="flex items-center gap-1.5">
 					{isRaining ? <RainIcon /> : <ClearIcon />}
 					<span className="font-medium text-gray-300">Estado:</span>
 					<span className="font-mono font-semibold text-white">{isRaining ? "Lluvia" : "Despejado"}</span>
 				</div>
+				<button
+					onClick={() => setIsSettingsOpen(true)}
+					className="p-2 hover:bg-white/10 rounded-full transition-colors"
+				>
+					<Settings className="w-5 h-5 text-gray-300" />
+				</button>
 			</div>
+
+			{isSettingsOpen && (
+				<SettingsModal onClose={() => setIsSettingsOpen(false)} />
+			)}
 		</div>
 	);
 }

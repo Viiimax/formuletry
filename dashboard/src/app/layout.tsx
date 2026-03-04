@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { env } from "@/env";
 import EnvScript from "@/env-script";
 import OledModeProvider from "@/components/OledModeProvider";
+import CookieBanner from "@/components/CookieBanner";
 
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -18,11 +19,24 @@ type Props = Readonly<{
 }>;
 
 export default function RootLayout({ children }: Props) {
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Formuletry",
+		"alternateName": ["Formuletry F1", "Formuletry Telemetry"],
+		"url": "https://www.formuletry.com",
+	};
+
 	return (
 		<html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} font-sans text-white`}>
 			<head>
 				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
 				<EnvScript />
+
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				/>
 
 				{/* Google Analytics */}
 				<Script
@@ -49,6 +63,19 @@ export default function RootLayout({ children }: Props) {
 					`}
 				</Script>
 
+				<Script
+					async
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+					crossOrigin="anonymous"
+				/>
+
+				<Script
+					id="adsbygoogle-init"
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789183648057200"
+					strategy="afterInteractive"
+					crossOrigin="anonymous"
+				/>
+
 				{env.TRACKING_ID && env.TRACKING_URL && (
 					<>
 						<Script strategy="afterInteractive" data-site-id={env.TRACKING_ID} src={env.TRACKING_URL} />
@@ -57,8 +84,7 @@ export default function RootLayout({ children }: Props) {
 			</head>
 
 			<body className="bg-[#111827] min-h-screen">
-				<OledModeProvider>{children}</OledModeProvider>
-			</body>
+				<OledModeProvider>{children}</OledModeProvider>			<CookieBanner />			</body>
 		</html>
 	);
 }

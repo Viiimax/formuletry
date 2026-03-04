@@ -5,19 +5,32 @@
   </picture>
 </p>
 
-<h1 align="center">Real-time Formula 1 telemetry and timing</h1>
+<h1 align="center">Formuletry - Real-time Formula 1 telemetry and timing</h1>
 
-## f1-dash
+## About
 
-A real-time F1 dashboard that shows the leader board, tires, gaps, laps, mini sectors and much more.
+Formuletry is a real-time F1 dashboard that shows the leader board, tires, gaps, laps, mini sectors and much more.
+
+### Original Project
+
+This project is based on [f1-dash](https://github.com/slowlydev/f1-dash) by [slowlydev](https://github.com/slowlydev), licensed under GNU AGPL v3.
+
+**Original author:** slowlydev  
+**Fork maintainer:** MaximoLXXXI
+
+Special thanks to slowlydev for creating the original f1-dash project that made this possible.
 
 ## Contributing
 
-I really appreciate your interest in contributing to this project. I recommend checking out the GitHub issues marked as "Good First Issue" to get started. Also, please read [`CONTRIBUTING.md`](CONTRIBUTING.md) to learn how to contribute and set up f1-dash on your local machine for development.
+I really appreciate your interest in contributing to this project. I recommend checking out the GitHub issues marked as "Good First Issue" to get started. Also, please read [`CONTRIBUTING.md`](CONTRIBUTING.md) to learn how to contribute and set up Formuletry on your local machine for development.
 
 ## Supporting
 
-If you'd like to support this project and help me dedicate more time to it, you can [buy me a coffee](https://www.buymeacoffee.com/slowlydev).
+### Support Formuletry
+If you'd like to support this fork, you can [invite me a tecito](https://tecito.app/formuletry).
+
+### Support Original Author
+Please also consider supporting the original creator: [buy slowlydev a coffee](https://www.buymeacoffee.com/slowlydev).
 
 ## Notice
 

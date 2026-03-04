@@ -43,6 +43,9 @@ type SettingsStore = {
 
 	delayIsPaused: boolean;
 	setDelayIsPaused: (delayIsPaused: boolean) => void;
+
+	compactMode: boolean;
+	setCompactMode: (compactMode: boolean) => void;
 };
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -80,7 +83,6 @@ export const useSettingsStore = create<SettingsStore>()(
 				setFavoriteDrivers: (favoriteDrivers: string[]) => set({ favoriteDrivers }),
 				removeFavoriteDriver: (driver: string) =>
 					set((state) => ({ favoriteDrivers: state.favoriteDrivers.filter((d) => d !== driver) })),
-
 				raceControlChime: false,
 				setRaceControlChime: (raceControlChime: boolean) => set({ raceControlChime }),
 
@@ -89,6 +91,9 @@ export const useSettingsStore = create<SettingsStore>()(
 
 				delayIsPaused: true,
 				setDelayIsPaused: (delayIsPaused: boolean) => set({ delayIsPaused }),
+
+				compactMode: false,
+				setCompactMode: (compactMode: boolean) => set({ compactMode }),
 			}),
 			{
 				name: "settings-storage",

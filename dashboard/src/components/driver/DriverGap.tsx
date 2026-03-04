@@ -22,18 +22,23 @@ export default function DriverGap({ timingDriver, sessionPart }: Props) {
 
 	const catching = timingDriver.IntervalToPositionAhead?.Catching;
 
-		return (
+	return (
 		<div className="place-self-start">
 			<p
-				className={clsx("text-lg leading-none font-medium font-mono tabular-nums", {
-					"text-emerald-500": catching,
-					"text-zinc-500": !gapToFront,
-				})}
+				className={clsx(
+					"text-xs leading-tight font-medium font-mono tabular-nums",
+					{
+						"text-emerald-500": catching,
+						"text-zinc-500": !gapToFront,
+					}
+				)}
 			>
 				{!!gapToFront ? gapToFront : "-- ---"}
 			</p>
 
-			<p className="text-sm leading-none text-zinc-500 font-mono tabular-nums">{gapToLeader ? gapToLeader : "-- -- ---"}</p>
+			<p className="text-[10px] leading-tight text-zinc-500 font-mono tabular-nums">
+				{gapToLeader ? gapToLeader : "-- -- ---"}
+			</p>
 		</div>
 	);
 }

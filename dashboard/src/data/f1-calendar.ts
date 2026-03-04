@@ -2,6 +2,7 @@
 // Generated from API on 2026-02-10
 
 import type { Round } from "@/types/schedule.type";
+import { formatInTimeZone } from 'date-fns-tz';
 
 export const f1Calendar2026: Round[] = [
   {
@@ -400,6 +401,14 @@ export const getCurrentEvent = (): Round | undefined => {
 
 export const getNextEvent = (): Round | undefined => {
   const now = new Date();
+  
+  // First check if there's a current event in progress
+  const currentEvent = getCurrentEvent();
+  if (currentEvent) {
+    return currentEvent;
+  }
+  
+  // If no current event, find the next upcoming event
   return f1Calendar2026.find(event => {
     const start = new Date(event.start);
     return start > now;
@@ -408,4 +417,19 @@ export const getNextEvent = (): Round | undefined => {
 
 export const getScheduleStatic = (): Round[] => {
   return f1Calendar2026;
+};
+
+export const getLocalizedCalendar = (): Round[] => {
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  return f1Calendar2026.map((event) => ({
+    ...event,
+    start: formatInTimeZone(new Date(event.start), userTimeZone, "yyyy-MM-dd'T'HH:mm:ssXXX"),
+    end: formatInTimeZone(new Date(event.end), userTimeZone, "yyyy-MM-dd'T'HH:mm:ssXXX"),
+    sessions: event.sessions.map((session) => ({
+      ...session,
+      start: formatInTimeZone(new Date(session.start), userTimeZone, "yyyy-MM-dd'T'HH:mm:ssXXX"),
+      end: formatInTimeZone(new Date(session.end), userTimeZone, "yyyy-MM-dd'T'HH:mm:ssXXX"),
+    })),
+  }));
 };

@@ -1,45 +1,33 @@
-import Image from "next/image";
-
+import clsx from "clsx";
+import TireIcon from "../TireIcon"; // Ajusta la ruta relativa si es necesario
 import type { Stint } from "@/types/state.type";
 
 type Props = {
-	stints: Stint[] | undefined;
+    stints: Stint[] | undefined;
 };
 
 export default function DriverTire({ stints }: Props) {
-	const stops = stints ? stints.length - 1 : 0;
-	const currentStint = stints ? stints[stints.length - 1] : null;
-	const unknownCompound = !["soft", "medium", "hard", "intermediate", "wet"].includes(
-		currentStint?.Compound?.toLowerCase() ?? "",
-	);
+    const stops = stints ? stints.length - 1 : 0;
+    const currentStint = stints ? stints[stints.length - 1] : null;
 
-	return (
-		<div className="flex flex-row items-center gap-2 place-self-start">
-			{currentStint && !unknownCompound && currentStint.Compound && (
-				<Image
-					src={"/tires/" + currentStint.Compound.toLowerCase() + ".svg"}
-					width={32}
-					height={32}
-					alt={currentStint.Compound}
-				/>
-			)}
+    return (
+        <div className="flex flex-row items-center gap-1 place-self-start">
+            {currentStint ? (
+                <TireIcon compound={currentStint.Compound || ""} size={20} />
+            ) : (
+                <div className="h-5 w-5 animate-pulse rounded-full bg-slate-800" />
+            )}
 
-			{currentStint && unknownCompound && (
-				<div className="flex h-8 w-8 items-center justify-center">
-					<Image src={"/tires/unknown.svg"} width={32} height={32} alt={"unknown"} />
-				</div>
-			)}
+            <div>
+                <p className="text-xs leading-tight font-medium">
+                    L {currentStint?.TotalLaps ?? 0}
+                    {currentStint?.New ? "" : "*"}
+                </p>
 
-			{!currentStint && <div className="h-8 w-8 animate-pulse rounded-full bg-zinc-800 font-semibold" />}
-
-			<div>
-				<p className="leading-none font-medium">
-					L {currentStint?.TotalLaps ?? 0}
-					{currentStint?.New ? "" : "*"}
-				</p>
-
-				<p className="text-sm leading-none text-zinc-500">PIT {stops}</p>
-			</div>
-		</div>
-	);
+                <p className="text-[10px] leading-tight text-slate-500">
+                    PIT {stops}
+                </p>
+            </div>
+        </div>
+    );
 }
