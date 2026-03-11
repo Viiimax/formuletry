@@ -1,7 +1,8 @@
 "use client";
 
-import { X, Monitor, Zap, Gauge, Tv, AlignJustify, Star } from "lucide-react";
+import { X, Monitor, Zap, Gauge, Tv, AlignJustify, Star, Play, Pause, RotateCcw } from "lucide-react";
 import { useSettingsStore } from "@/stores/useSettingsStore";
+import { useEffect, useRef } from "react";
 
 // Componente de Switch (Toggle)
 const ToggleSwitch = ({ active, onClick }: { active: boolean; onClick: () => void }) => (
@@ -23,18 +24,66 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
   // Conexión con el Store
   const { 
     delay, setDelay, 
+    delayIsPaused, setDelayIsPaused,
     oledMode, setOledMode,
     speedUnit, setSpeedUnit,
     compactMode, setCompactMode 
   } = useSettingsStore();
 
+  // Timer para incrementar delay cuando está pausado
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (delayIsPaused) {
+      // Iniciar timer que incrementa el delay cada segundo
+      intervalRef.current = setInterval(() => {
+        const currentStore = useSettingsStore.getState();
+        const currentDelay = currentStore.delay || 0;
+        setDelay(currentDelay + 1);
+      }, 1000);
+    } else {
+      // Limpiar timer cuando no está pausado
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+
+    // Cleanup del timer al desmontar o cambiar estado
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [delayIsPaused, setDelay]);
+
   // Función para manejar el cambio en el input numérico
   const handleDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    // Asegurarse de que es un número válido y no negativo
-    if (!isNaN(value) && value >= 0) {
-      setDelay(value);
+    const value = e.target.value;
+    
+    // Si está vacío, establecer a 0
+    if (value === '' || value === null || value === undefined) {
+      setDelay(0);
+      return;
     }
+    
+    const numericValue = Number(value);
+    // Asegurarse de que es un número válido y no negativo
+    if (!isNaN(numericValue) && numericValue >= 0) {
+      setDelay(numericValue);
+    }
+  };
+
+  // Función para pausar/reanudar el timer
+  const togglePause = () => {
+    setDelayIsPaused(!delayIsPaused);
+  };
+
+  // Función para resetear el delay
+  const resetDelay = () => {
+    setDelay(0);
+    // Si estaba pausado, mantener la pausa pero resetear el valor
   };
 
   return (
@@ -65,12 +114,12 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 Sincronización TV
               </h3>
               <span className="text-xs font-mono text-gray-400 bg-black/30 px-2 py-1 rounded">
-                {delay === 0 ? "LIVE" : `-${delay}s DELAY`}
+                {(delay || 0) === 0 ? "LIVE" : `-${delay || 0}s DELAY`}
               </span>
             </div>
 
-            <div className="bg-black/20 p-4 rounded-xl border border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="flex items-center gap-3 mb-3">
                     <Tv className="w-5 h-5 text-gray-400" />
                     <div>
                         <p className="text-white font-medium text-sm">Broadcast Delay</p>
@@ -78,16 +127,47 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                     </div>
                 </div>
                 
-                {/* Input Numérico Simple */}
-                <div className="flex items-center">
+                {/* Controles del Delay */}
+                <div className="flex items-center gap-3">
+                    {/* Input Numérico */}
                     <input
                         type="number"
                         min="0"
-                        value={delay}
+                        value={delay || 0}
                         onChange={handleDelayChange}
                         className="w-20 h-10 bg-[#111827] border border-white/10 rounded-lg text-white text-center font-mono focus:outline-none focus:border-blue-500 appearance-none"
+                        disabled={delayIsPaused}
                     />
+
+                    {/* Botón Pausa/Play */}
+                    <button
+                        onClick={togglePause}
+                        className={`w-10 h-10 flex items-center justify-center rounded-lg border transition-colors ${
+                            delayIsPaused 
+                                ? 'bg-blue-600 border-blue-500 text-white hover:bg-blue-700' 
+                                : 'bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600'
+                        }`}
+                        title={delayIsPaused ? "Pausado (contador activo)" : "Activo"}
+                    >
+                        {delayIsPaused ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    </button>
+
+                    {/* Botón Reset */}
+                    <button
+                        onClick={resetDelay}
+                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-red-600 border border-red-500 text-white hover:bg-red-700 transition-colors"
+                        title="Reset delay"
+                    >
+                        <RotateCcw className="w-4 h-4" />
+                    </button>
                 </div>
+
+                <p className="text-xs text-gray-500 mt-2">
+                    {delayIsPaused 
+                        ? "⏸️ Pausado - El delay se incrementa automáticamente" 
+                        : "▶️ Activo - Usa el valor manual"
+                    }
+                </p>
             </div>
           </div>
 

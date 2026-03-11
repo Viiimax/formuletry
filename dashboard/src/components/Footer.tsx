@@ -18,7 +18,7 @@ export default function Footer() {
 
 				<p>
 
-					<Link className="text-blue-500" href="/help">
+					<Link className="text-blue-500" href="/help" prefetch={false}>
 						Help
 					</Link>
 					.
@@ -43,19 +43,19 @@ export default function Footer() {
 
 			<p>
 				Links to legal pages:
-				<Link className="text-blue-500" href="/privacy">
+				<Link className="text-blue-500" href="/privacy" prefetch={false}>
 					Privacy Policy
 				</Link>
 				·
-				<Link className="text-blue-500" href="/terms">
+				<Link className="text-blue-500" href="/terms" prefetch={false}>
 					Terms of Service
 				</Link>
 				·
-				<Link className="text-blue-500" href="/about">
+				<Link className="text-blue-500" href="/about" prefetch={false}>
 					About Us
 				</Link>
 				·
-				<Link className="text-blue-500" href="/contact">
+				<Link className="text-blue-500" href="/contact" prefetch={false}>
 					Contact
 				</Link>
 			</p>

@@ -8,13 +8,13 @@ export default function Home() {
 			</h1>
 
 			<div className="flex flex-wrap gap-4">
-				<Link href="/dashboard">
+				<Link href="/dashboard" prefetch={false}>
 					<button className="rounded-xl border-2 border-transparent p-4 font-medium bg-zinc-800 text-white">
 						Go to Dashboard
 					</button>
 				</Link>
 
-				<Link href="/schedule">
+				<Link href="/schedule" prefetch={false}>
 					<button className="rounded-xl border-2 border-zinc-700 bg-transparent p-4 font-medium text-white">
 						Check Schedule
 					</button>

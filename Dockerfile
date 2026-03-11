@@ -18,13 +18,13 @@ FROM builder-base AS builder
 RUN cargo b -r
 
 
-# Default target for Railway
+# Default target for Koyeb (Realtime)
 FROM alpine:3
-COPY --from=builder /usr/src/app/target/release/api .
-CMD [ "/api" ]
+COPY --from=builder /usr/src/app/target/release/realtime .
+CMD [ "/realtime" ]
 
 
 # Alternative targets
-FROM alpine:3 AS realtime
-COPY --from=builder /usr/src/app/target/release/realtime .
-CMD [ "/realtime" ]
+FROM alpine:3 AS api
+COPY --from=builder /usr/src/app/target/release/api .
+CMD [ "/api" ]

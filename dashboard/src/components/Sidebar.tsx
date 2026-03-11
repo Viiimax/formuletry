@@ -165,7 +165,7 @@ const Item = ({ target, item }: ItemProps) => {
 	const active = usePathname() === item.href;
 
 	return (
-		<Link href={item.href} target={target}>
+		<Link href={item.href} target={target} prefetch={false}>
 			<div
 				className={clsx("rounded-lg p-1 px-2 hover:bg-zinc-900", {
 					"bg-zinc-800!": active,

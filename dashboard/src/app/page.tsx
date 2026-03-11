@@ -40,7 +40,7 @@ const countryCodeMap: Record<string, string> = {
 
 function NextEventCard() {
 	return (
-		<a href="/dashboard" className="block rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+		<Link href="/dashboard" prefetch={false} className="block rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-4">
 					<Flag countryCode="aus" className="h-8 w-12 rounded shadow-sm" />
@@ -52,7 +52,7 @@ function NextEventCard() {
 					</div>
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 }
 
@@ -64,7 +64,7 @@ export default function Home() {
 		{/* Content */}
 		<div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16">
 			{/* Hero Section */}
-				<div className="text-center mb-16">
+			<div className="text-center mb-8">
 					{/* Brand */}
 					<div className="mb-8">
 						<h1 className="text-white/90 text-xl font-light tracking-[0.3em] mb-2">
@@ -87,9 +87,9 @@ export default function Home() {
 					</p>
 				</div>
 
-				{/* Launch Button */}
-				<div className="mb-6 md:mb-8">
-					<Link href="/dashboard">
+				{/* Primary Actions */}
+			<div className="mb-4">
+					<Link href="/dashboard" prefetch={false}>
 						<button className="group relative overflow-hidden bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-5 px-10 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
 							<div className="absolute inset-0 bg-linear-to-r from-blue-400 to-cyan-300 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 								<div className="relative flex items-center space-x-3">
@@ -99,7 +99,45 @@ export default function Home() {
 					</Link>
 				</div>
 
-				{/* Secondary Actions (Install, Twitter, Coffee) */}
+				{/* Install Button */}
+			<div className="mb-4">
+				</div>
+
+		{/* Available Sponsor Space (Compact Mobile-First) */}
+		<a 
+			href="https://twitter.com/formuletry" 
+			target="_blank" 
+			rel="noopener noreferrer"
+			className="block w-full max-w-lg mb-6"
+		>
+			<div className="group relative overflow-hidden rounded-xl border border-dashed border-white/20 bg-white/5 backdrop-blur-sm p-3 hover:bg-white/10 hover:border-blue-400/50 transition-all cursor-pointer flex flex-row items-center gap-3 text-left">
+				
+				<div className="w-10 h-10 rounded flex-shrink-0 bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+					<span className="text-blue-400 text-xs font-bold tracking-wider">AD</span>
+				</div>
+				
+				<div className="flex-1 min-w-0">
+					<h3 className="text-sm font-bold text-white leading-tight">
+						Tu Marca Aquí
+					</h3>
+					<p className="text-xs text-gray-400 truncate mt-0.5">
+						Conecta con miles de fanáticos del motorsport.
+					</p>
+				</div>
+
+				<div className="flex-shrink-0 text-gray-500 group-hover:text-blue-400 transition-colors pr-1">
+					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+					</svg>
+				</div>
+			</div>
+		</a>
+
+			{/* Next Event Widget */}
+					<NextEventCard />
+				</div>
+
+				{/* Secondary Actions */}
 				<div className="flex flex-row items-center justify-center gap-2 md:gap-3 mb-8 md:mb-16 w-full max-w-xl mx-auto">
 					<a 
 						href="https://twitter.com/formuletry" 
@@ -116,20 +154,10 @@ export default function Home() {
 					<DonationButton />
 				</div>
 
-				{/* Install Button */}
-				<div className="flex flex-row items-center justify-center gap-2 md:gap-3 mb-8 md:mb-16 w-full max-w-xl mx-auto">
-					<InstallButton />
-				</div>
-
-				{/* Next Event Widget */}
-				<div className="w-full max-w-lg mb-16">
-					<NextEventCard />
-				</div>
-
 				{/* Navigation Grid */}
-				<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+			<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl mx-auto">
 					{/* Calendar */}
-					<Link href="/schedule">
+					<Link href="/schedule" prefetch={false}>
 						<div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-400/30 cursor-pointer">
 							<div className="flex flex-col items-center text-center">
 								<div className="mb-4 p-3 rounded-xl bg-blue-500/20 group-hover:bg-blue-500/30 transition-colors">
@@ -216,10 +244,9 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* Footer */}
-			<SupportFooter />
+				{/* Footer */}
+				<SupportFooter />
 		</main>
 	);
 }

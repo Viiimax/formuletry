@@ -17,7 +17,7 @@ export default function Layout({ children }: Props) {
 		<>
 			<nav className="sticky top-0 left-0 z-10 flex h-16 w-full items-center justify-between gap-4 border-b border-white/10 bg-deep-slate/90 backdrop-blur-xl px-6">
 				<div className="flex">
-					<Link className="font-medium text-gray-300 transition-colors duration-200 hover:text-white active:scale-95" href="/">
+					<Link className="font-medium text-gray-300 transition-colors duration-200 hover:text-white active:scale-95" href="/" prefetch={false}>
 						Home
 					</Link>
 				</div>

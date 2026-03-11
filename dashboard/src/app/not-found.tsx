@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import Button from "@/components/ui/Button";
 
+export const dynamic = "force-static";
+
 export default function NotFound() {
 	return (
 		<div className="container mx-auto max-w-(--breakpoint-lg) px-4">
@@ -11,7 +13,7 @@ export default function NotFound() {
 				<h1 className="my-20 text-center text-5xl font-bold">Page not found</h1>
 
 				<div className="flex flex-wrap gap-4">
-					<Link href="/">
+					<Link href="/" prefetch={false}>
 						<Button className="rounded-xl! border-2 border-zinc-700 bg-transparent! p-4 font-medium">
 							Go back to home
 						</Button>
